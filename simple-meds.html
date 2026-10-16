@@ -133,6 +133,12 @@
     .topnav { max-width:40rem; margin:0 auto; padding:0.9rem 1rem 0; display:flex; flex-wrap:wrap; gap:0.4rem 1rem; align-items:center; font-size:0.95rem; }
     .topnav a { color: var(--accent); text-decoration:none; font-weight:600; }
     .topnav .brand { color: var(--ink); font-weight:750; margin-right:auto; }
+    .gate { margin-top:0.9rem; padding:0.9rem; border:1px dashed var(--line); border-radius:0.85rem; background:#faf8f4; }
+    .gate-title { margin:0 0 0.6rem; font-size:1rem; }
+    .field { display:block; margin:0 0 0.6rem; font-weight:600; font-size:0.95rem; }
+    .field input { display:block; width:100%; margin-top:0.3rem; font:inherit; font-weight:400; padding:0.65rem 0.75rem; border:1px solid var(--line); border-radius:0.65rem; background:#fff; }
+    .field input:focus { outline:2px solid var(--accent); border-color:var(--accent); }
+    button.btn { width:100%; border:0; cursor:pointer; font-family:inherit; }
   </style>
 </head>
 <body>
@@ -153,15 +159,23 @@
       <div class="shots">
         <img src="assets/phone-home.png" width="1080" height="1920" alt="Home list of medicines" />
         <img src="assets/phone-add.png" width="1080" height="1920" alt="Add a medicine" />
-        <img src="assets/phone-reminder.png" width="1080" height="1920" alt="Reminder due screen" />
-        <img src="assets/phone-history.png" width="1080" height="1920" alt="Dose history log" />
       </div>
+      <div id="more-shots" class="shots" hidden style="margin-top:0.65rem">
+        <img src="assets/phone-reminder.png" width="1080" height="1920" alt="Reminder due screen" loading="lazy" />
+        <img src="assets/phone-history.png" width="1080" height="1920" alt="Dose history log" loading="lazy" />
+      </div>
+      <form id="shots-gate" class="gate">
+        <h3 class="gate-title">See more screenshots</h3>
+        <label class="field">Your email<input type="email" name="email" required autocomplete="email" placeholder="you@example.com" /></label>
+        <p class="note" style="margin:0 0 0.4rem">We&rsquo;ll send occasional JS Legends updates. Unsubscribe anytime.</p>
+        <button class="btn btn-primary" type="submit" data-track="show-me-email-gate">Show me</button>
+      </form>
     </section>
 
     <section class="card" aria-labelledby="download-title">
       <h2 id="download-title">Download the APK</h2>
       <p>Free Android app from JS Legends. Install from this page if you are not using the Samsung Galaxy Store build.</p>
-      <a class="btn btn-primary" href="DOWNLOAD_URL">Download APK</a>
+      <a class="btn btn-primary" href="DOWNLOAD_URL" data-track="download-apk">Download APK</a>
     </section>
 
     <section class="card" aria-labelledby="install-title">
@@ -179,7 +193,7 @@
       <h2 id="ads-title">Remove ads — $4.99 once</h2>
       <p>The free app may show ads away from Taken, Skip, Snooze, and the due card. A one-time purchase removes ads. Buying does not add medical features.</p>
       <p>On this website build, payment uses a Stripe Payment Link. After you pay, you receive a <strong>license key</strong>. Enter that key in the app (Settings). The app checks the key once and stores the unlock on your phone. Keep a copy of the key; it is how you restore remove-ads if you reinstall.</p>
-      <a class="btn btn-secondary" href="STRIPE_LINK">Buy remove ads — $4.99</a>
+      <a class="btn btn-secondary" href="STRIPE_LINK" data-track="buy-remove-ads">Buy remove ads — $4.99</a>
     </section>
 
     <section class="card">
@@ -202,5 +216,32 @@
   <footer>
     <p>&copy; 2026 JS Legends · Zirconia, NC · <a href="https://gist.github.com/Curious-Josh1975/8cf0863ac1959f25cbb6e45ab8584f67">Privacy</a></p>
   </footer>
+  <script>
+    // Where email signups go. Paste a form endpoint URL here (see EMAIL-CAPTURE-OPTIONS.md).
+    // While empty, signup falls back to a pre-filled email to JS Legends.
+    const FORM_ENDPOINT = '';
+    (function () {
+      var KEY = 'jsl_shots_unlocked';
+      var form = document.getElementById('shots-gate');
+      var more = document.getElementById('more-shots');
+      function reveal() { more.hidden = false; form.hidden = true; }
+      try { if (localStorage.getItem(KEY) === '1') reveal(); } catch (e) {}
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var email = form.email.value.trim();
+        if (!email) return;
+        if (FORM_ENDPOINT) {
+          fetch(FORM_ENDPOINT, { method: 'POST', headers: { 'Accept': 'application/json' }, body: new FormData(form) }).catch(function () {});
+        } else {
+          window.location.href = 'mailto:joshuaatchison.atchison@gmail.com?subject=' +
+            encodeURIComponent('JS Legends mailing list signup') +
+            '&body=' + encodeURIComponent('Please add me to the JS Legends updates list: ' + email);
+        }
+        try { localStorage.setItem(KEY, '1'); } catch (e) {}
+        reveal();
+      });
+    })();
+  </script>
+  <script src="assets/site.js"></script>
 </body>
 </html>
