@@ -1,7 +1,7 @@
 // JS Legends site script: analytics (GoatCounter) + hero A/B test.
 // Paste your GoatCounter site code here (the "CODE" in CODE.goatcounter.com).
 // While it is empty, nothing is loaded and nothing is sent anywhere.
-const ANALYTICS_CODE = '';
+const ANALYTICS_CODE = 'jslegends';
 
 (function () {
   var params = new URLSearchParams(location.search);
