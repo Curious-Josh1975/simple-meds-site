@@ -143,12 +143,22 @@
     .badge { display:inline-block; font-size:0.8rem; font-weight:650; padding:0.15rem 0.55rem; border-radius:999px; background:#e3efe9; color:var(--accent); }
     .badge.test { background:#f3ebe0; color:var(--warn); }
     .product a.more { color:var(--accent); font-weight:600; }
+    a.product-link { color:inherit; text-decoration:none; border-radius:0.85rem; padding:0.5rem; margin:-0.5rem; transition:background .15s, box-shadow .15s; }
+    a.product-link .more { color:var(--accent); font-weight:600; text-decoration:underline; }
+    a.product-link:hover { background:#f3efe7; }
+    a.product-link:focus-visible { outline:3px solid var(--accent); outline-offset:2px; background:#f3efe7; }
+    .field { display:block; margin:0 0 0.8rem; font-weight:600; font-size:0.95rem; }
+    .field input, .field textarea { display:block; width:100%; margin-top:0.3rem; font:inherit; font-weight:400; padding:0.65rem 0.75rem; border:1px solid var(--line); border-radius:0.65rem; background:#fff; color:var(--ink); }
+    .field input:focus, .field textarea:focus { outline:2px solid var(--accent); border-color:var(--accent); }
+    button.btn { width:100%; border:0; cursor:pointer; font-family:inherit; }
+    .note a { color: var(--accent); }
+    .works li { margin-bottom:0.5rem; }
   </style>
 </head>
 <body>
   <nav class="topnav" aria-label="Site">
     <a class="brand" href="index.html">JS Legends</a>
-    <a href="#products">Products</a><a href="#inventions">Inventions</a><a href="#about">About</a><a href="#contact">Contact</a>
+    <a href="#products">Products</a><a href="#inventions">Inventions</a><a href="coming-soon.html">Coming soon</a><a href="#about">About</a><a href="#contact">Contact</a>
   </nav>
   <header>
     <div class="mark" aria-hidden="true">JS</div>
@@ -168,14 +178,14 @@
 
     <section class="card" id="products" aria-labelledby="products-title">
       <h2 id="products-title">Products</h2>
-      <div class="product">
+      <a class="product product-link" href="simple-meds.html" aria-label="Simple Meds, available soon for Android. Learn more.">
         <img src="assets/icon-512.png" width="56" height="56" alt="Simple Meds icon" />
         <div>
           <h3>Simple Meds <span class="badge">Available soon for Android</span></h3>
           <p>A calm home medicine list with dose reminders. Your data stays on your phone.</p>
-          <p><a class="more" href="simple-meds.html">Learn more about Simple Meds &rarr;</a></p>
+          <p><span class="more">Learn more about Simple Meds &rarr;</span></p>
         </div>
-      </div>
+      </a>
       <hr style="border:0;border-top:1px solid var(--line);margin:1rem 0" />
       <div class="product">
         <div class="pmark" aria-hidden="true">NN</div>
@@ -189,6 +199,7 @@
     <section class="card" id="inventions" aria-labelledby="inventions-title">
       <h2 id="inventions-title">Future inventions</h2>
       <p>Practical tools for patients and caregivers, in development. More to share when they are ready.</p>
+      <a class="btn btn-secondary" href="coming-soon.html">See what&rsquo;s coming</a>
     </section>
 
     <section class="card" id="about" aria-labelledby="about-title">
