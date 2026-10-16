@@ -3,9 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Simple Meds — Download</title>
-  <meta name="description" content="Simple Meds: a calm home medicine list. Data stays on your phone." />
-  <link rel="icon" type="image/png" href="assets/icon-512.png" />
+  <title>JS Legends — Simple, practical tools from the bedside</title>
+  <meta name="description" content="JS Legends is a small family company in Zirconia, NC building simple, practical tools for patients, families, and nurses." />
   <style>
     :root {
       --bg: #f7f4ef;
@@ -129,68 +128,78 @@
     @media (min-width: 640px) {
       .shots { grid-template-columns: repeat(4, 1fr); }
     }
+
+    .topnav { max-width:40rem; margin:0 auto; padding:0.9rem 1rem 0; display:flex; flex-wrap:wrap; gap:0.4rem 1rem; align-items:center; font-size:0.95rem; }
+    .topnav a { color: var(--accent); text-decoration:none; font-weight:600; }
+    .topnav .brand { color: var(--ink); font-weight:750; margin-right:auto; }
+
+    .mark { width:4.5rem; height:4.5rem; border-radius:1.1rem; background:var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1.7rem; letter-spacing:-0.03em; box-shadow:0 2px 10px rgba(0,0,0,0.08); flex:none; }
+    .lead { font-size:1.08rem; margin:0 0 0.6rem; }
+    .product { display:flex; gap:0.85rem; align-items:flex-start; }
+    .product img, .product .pmark { width:3.5rem; height:3.5rem; border-radius:0.85rem; flex:none; }
+    .product .pmark { background:#efe8dc; border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-weight:750; color:var(--accent); }
+    .product h3 { margin:0 0 0.2rem; font-size:1.05rem; }
+    .product p { margin:0.2rem 0; }
+    .badge { display:inline-block; font-size:0.8rem; font-weight:650; padding:0.15rem 0.55rem; border-radius:999px; background:#e3efe9; color:var(--accent); }
+    .badge.test { background:#f3ebe0; color:var(--warn); }
+    .product a.more { color:var(--accent); font-weight:600; }
   </style>
 </head>
 <body>
+  <nav class="topnav" aria-label="Site">
+    <a class="brand" href="index.html">JS Legends</a>
+    <a href="#products">Products</a><a href="#inventions">Inventions</a><a href="#about">About</a><a href="#contact">Contact</a>
+  </nav>
   <header>
-    <img class="icon" src="assets/icon-512.png" width="72" height="72" alt="Simple Meds icon" />
+    <div class="mark" aria-hidden="true">JS</div>
     <div>
-      <h1>Simple Meds</h1>
-      <p class="tagline">A calm home medicine list. Your data stays on this phone.</p>
+      <h1>JS Legends</h1>
+      <p class="tagline">Simple, practical tools from real bedside experience.</p>
     </div>
   </header>
 
   <main>
-    <img class="hero" src="assets/feature.png" width="1024" height="500" alt="Simple Meds feature graphic" />
+    <section class="card" aria-labelledby="hero-title">
+      <h2 id="hero-title">Built by a nurse, for real life</h2>
+      <p class="lead">After years at the bedside, I have seen things go wrong for patients and families that did not have to.</p>
+      <p>Now, with AI, I can possibly fix some of them. Simple Meds is our first app, with more to come.</p>
+      <a class="btn btn-primary" href="#products">See our products</a>
+    </section>
 
-    <section class="card" aria-labelledby="shots-title">
-      <h2 id="shots-title">Screenshots</h2>
-      <div class="shots">
-        <img src="assets/phone-home.png" width="1080" height="1920" alt="Home list of medicines" />
-        <img src="assets/phone-add.png" width="1080" height="1920" alt="Add a medicine" />
-        <img src="assets/phone-reminder.png" width="1080" height="1920" alt="Reminder due screen" />
-        <img src="assets/phone-history.png" width="1080" height="1920" alt="Dose history log" />
+    <section class="card" id="products" aria-labelledby="products-title">
+      <h2 id="products-title">Products</h2>
+      <div class="product">
+        <img src="assets/icon-512.png" width="56" height="56" alt="Simple Meds icon" />
+        <div>
+          <h3>Simple Meds <span class="badge">Available soon for Android</span></h3>
+          <p>A calm home medicine list with dose reminders. Your data stays on your phone.</p>
+          <p><a class="more" href="simple-meds.html">Learn more about Simple Meds &rarr;</a></p>
+        </div>
+      </div>
+      <hr style="border:0;border-top:1px solid var(--line);margin:1rem 0" />
+      <div class="product">
+        <div class="pmark" aria-hidden="true">NN</div>
+        <div>
+          <h3>NurseNote <span class="badge test">In testing</span></h3>
+          <p>A visit-notes helper for home health and hospice nurses.</p>
+        </div>
       </div>
     </section>
 
-    <section class="card" aria-labelledby="download-title">
-      <h2 id="download-title">Download the APK</h2>
-      <p>Free Android app from JS Legends. Install from this page if you are not using the Samsung Galaxy Store build.</p>
-      <a class="btn btn-primary" href="DOWNLOAD_URL">Download APK</a>
+    <section class="card" id="inventions" aria-labelledby="inventions-title">
+      <h2 id="inventions-title">Future inventions</h2>
+      <p>Practical tools for patients and caregivers, in development. More to share when they are ready.</p>
     </section>
 
-    <section class="card" aria-labelledby="install-title">
-      <h2 id="install-title">Install on Android</h2>
-      <ol>
-        <li>Tap <strong>Download APK</strong> and wait for the file to finish.</li>
-        <li>Open the downloaded file. If Android blocks it, allow installs from this browser or Files app under <em>Install unknown apps</em>.</li>
-        <li>Confirm the install. You may see an unknown-source warning; that is normal for a direct APK.</li>
-        <li>Open Simple Meds and allow notifications (and Alarms &amp; reminders if prompted) so dose times can ring.</li>
-      </ol>
-      <p class="note">Always download from this site or a link you trust. Prefer HTTPS. Updates are not automatic from this page.</p>
+    <section class="card" id="about" aria-labelledby="about-title">
+      <h2 id="about-title">About</h2>
+      <p>I'm Joshua Atchison, a registered nurse and the founder of JS Legends, a small family company in Zirconia, NC.</p>
+      <p>I have spent years caring for patients and have seen where things go wrong for them and their families. With AI, I can possibly help fix some of those problems. We build simple, practical tools from real bedside experience. Simple Meds is our first app, with more to come.</p>
     </section>
 
-    <section class="card" aria-labelledby="ads-title">
-      <h2 id="ads-title">Remove ads — $4.99 once</h2>
-      <p>The free app may show ads away from Taken, Skip, Snooze, and the due card. A one-time purchase removes ads. Buying does not add medical features.</p>
-      <p>On this website build, payment uses a Stripe Payment Link. After you pay, you receive a <strong>license key</strong>. Enter that key in the app (Settings). The app checks the key once and stores the unlock on your phone. Keep a copy of the key; it is how you restore remove-ads if you reinstall.</p>
-      <a class="btn btn-secondary" href="STRIPE_LINK">Buy remove ads — $4.99</a>
-    </section>
-
-    <section class="card">
-      <p class="disclaimer">Not a medical device; does not diagnose, treat, cure, or prevent any condition.</p>
-      <p style="margin:0.85rem 0 0">It is a reminder list for one household. It never tells you what to take or how much. That comes from your prescriber and the bottle.</p>
-    </section>
-
-    <section class="card" aria-labelledby="privacy-title">
-      <h2 id="privacy-title">Privacy</h2>
-      <p>Your medicine list stays on your device. Read the privacy policy:</p>
-      <p><a href="https://gist.github.com/Curious-Josh1975/8cf0863ac1959f25cbb6e45ab8584f67">Privacy policy</a></p>
-    </section>
-
-    <section class="card" aria-labelledby="contact-title">
+    <section class="card" id="contact" aria-labelledby="contact-title">
       <h2 id="contact-title">Contact</h2>
-      <p>Questions about Simple Meds: <a href="mailto:joshuaatchison.atchison@gmail.com">joshuaatchison.atchison@gmail.com</a></p>
+      <p>I'd love to hear from you: <a href="mailto:joshuaatchison.atchison@gmail.com">joshuaatchison.atchison@gmail.com</a></p>
     </section>
   </main>
 
