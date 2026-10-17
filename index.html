@@ -153,6 +153,16 @@
     button.btn { width:100%; border:0; cursor:pointer; font-family:inherit; }
     .note a { color: var(--accent); }
     .works li { margin-bottom:0.5rem; }
+    .avail { margin:0.6rem 0 0 4.35rem; }
+    .avail .badge { font-size:0.88rem; white-space:normal; }
+    .avail a { color:var(--accent); font-weight:750; text-decoration:underline; }
+
+    /* Floating feedback button (all pages) */
+    .feedback-fab { position:fixed; right:max(1rem, env(safe-area-inset-right)); bottom:max(1rem, env(safe-area-inset-bottom)); z-index:1000; display:inline-flex; align-items:center; gap:0.5rem; min-height:52px; padding:0.8rem 1.25rem; border-radius:999px; background:#1c1b19; color:#ffffff; border:2px solid #ffffff; box-shadow:0 4px 18px rgba(0,0,0,0.28); font-weight:750; font-size:1.02rem; line-height:1.2; text-decoration:none; transition:opacity .2s, transform .2s; }
+    .feedback-fab:hover { background:#000; }
+    .feedback-fab:focus-visible { outline:3px solid #f2c94c; outline-offset:3px; }
+    .feedback-fab.is-hidden { opacity:0; pointer-events:none; transform:translateY(0.75rem); }
+    body { padding-bottom:5.5rem; }
   </style>
 </head>
 <body>
@@ -178,14 +188,15 @@
 
     <section class="card" id="products" aria-labelledby="products-title">
       <h2 id="products-title">Products</h2>
-      <a class="product product-link" href="simple-meds.html" data-track="learn-more-simple-meds" aria-label="Simple Meds, available soon for Android. Learn more.">
+      <a class="product product-link" href="simple-meds.html" data-track="learn-more-simple-meds" aria-label="Simple Meds. Learn more.">
         <img src="assets/icon-512.png" width="56" height="56" alt="Simple Meds icon" />
         <div>
-          <h3>Simple Meds <span class="badge">Available soon for Android</span></h3>
+          <h3>Simple Meds</h3>
           <p>A calm home medicine list with dose reminders. Your data stays on your phone.</p>
           <p><span class="more">Learn more about Simple Meds &rarr;</span></p>
         </div>
       </a>
+      <p class="avail"><span class="badge">Available on the Play Store soon, or <a href="simple-meds.html#download" data-track="download-here-home">download here</a>.</span></p>
       <hr style="border:0;border-top:1px solid var(--line);margin:1rem 0" />
       <div class="product">
         <div class="pmark" aria-hidden="true">NN</div>
@@ -218,6 +229,7 @@
   <footer>
     <p>&copy; 2026 JS Legends · Zirconia, NC · <a href="https://gist.github.com/Curious-Josh1975/8cf0863ac1959f25cbb6e45ab8584f67">Privacy</a></p>
   </footer>
+  <a class="feedback-fab" href="mailto:joshuaatchison.atchison@gmail.com?subject=Simple%20Meds%20feedback&amp;body=What%20happened%3A%0D%0A%0D%0A%0D%0AWhat%20you%20expected%3A%0D%0A%0D%0A%0D%0APhone%20model%3A%0D%0A" data-track="feedback-fab"><span aria-hidden="true">&#128172;</span> Report a bug / Suggest an idea</a>
 <script src="assets/site.js"></script>
 </body>
 </html>

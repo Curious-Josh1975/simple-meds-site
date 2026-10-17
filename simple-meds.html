@@ -53,10 +53,15 @@
       font-size: 1rem;
     }
     .hero {
-      width: 100%;
-      border-radius: 0.85rem;
+      /* Keep the 1024x500 natural aspect ratio; display about 38px (1cm) shorter than full column width would give. */
       display: block;
-      margin: 0.5rem 0 1.25rem;
+      width: auto;
+      max-width: 100%;
+      height: calc((min(100vw, 40rem) - 2rem) * 500 / 1024 - 38px);
+      aspect-ratio: 1024 / 500;
+      object-fit: contain;
+      margin: 0.5rem auto 1.25rem;
+      border-radius: 0.85rem;
       border: 1px solid var(--line);
     }
     .card {
@@ -139,6 +144,13 @@
     .field input { display:block; width:100%; margin-top:0.3rem; font:inherit; font-weight:400; padding:0.65rem 0.75rem; border:1px solid var(--line); border-radius:0.65rem; background:#fff; }
     .field input:focus { outline:2px solid var(--accent); border-color:var(--accent); }
     button.btn { width:100%; border:0; cursor:pointer; font-family:inherit; }
+
+    /* Floating feedback button (all pages) */
+    .feedback-fab { position:fixed; right:max(1rem, env(safe-area-inset-right)); bottom:max(1rem, env(safe-area-inset-bottom)); z-index:1000; display:inline-flex; align-items:center; gap:0.5rem; min-height:52px; padding:0.8rem 1.25rem; border-radius:999px; background:#1c1b19; color:#ffffff; border:2px solid #ffffff; box-shadow:0 4px 18px rgba(0,0,0,0.28); font-weight:750; font-size:1.02rem; line-height:1.2; text-decoration:none; transition:opacity .2s, transform .2s; }
+    .feedback-fab:hover { background:#000; }
+    .feedback-fab:focus-visible { outline:3px solid #f2c94c; outline-offset:3px; }
+    .feedback-fab.is-hidden { opacity:0; pointer-events:none; transform:translateY(0.75rem); }
+    body { padding-bottom:5.5rem; }
   </style>
 </head>
 <body>
@@ -172,7 +184,7 @@
       </form>
     </section>
 
-    <section class="card" aria-labelledby="download-title">
+    <section class="card" id="download" aria-labelledby="download-title">
       <h2 id="download-title">Download the APK</h2>
       <p>Free Android app from JS Legends. Install from this page if you are not using the Samsung Galaxy Store build.</p>
       <a class="btn btn-primary" href="https://github.com/Curious-Josh1975/simple-meds-site/releases/download/v1.0.5.1/Simple-Meds-1.0.5.1-web.apk" data-track="download-apk">Download APK</a>
@@ -243,6 +255,7 @@
       });
     })();
   </script>
+  <a class="feedback-fab" href="mailto:joshuaatchison.atchison@gmail.com?subject=Simple%20Meds%20feedback&amp;body=What%20happened%3A%0D%0A%0D%0A%0D%0AWhat%20you%20expected%3A%0D%0A%0D%0A%0D%0APhone%20model%3A%0D%0A" data-track="feedback-fab"><span aria-hidden="true">&#128172;</span> Report a bug / Suggest an idea</a>
   <script src="assets/site.js"></script>
 </body>
 </html>

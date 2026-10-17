@@ -153,6 +153,13 @@
     button.btn { width:100%; border:0; cursor:pointer; font-family:inherit; }
     .note a { color: var(--accent); }
     .works li { margin-bottom:0.5rem; }
+
+    /* Floating feedback button (all pages) */
+    .feedback-fab { position:fixed; right:max(1rem, env(safe-area-inset-right)); bottom:max(1rem, env(safe-area-inset-bottom)); z-index:1000; display:inline-flex; align-items:center; gap:0.5rem; min-height:52px; padding:0.8rem 1.25rem; border-radius:999px; background:#1c1b19; color:#ffffff; border:2px solid #ffffff; box-shadow:0 4px 18px rgba(0,0,0,0.28); font-weight:750; font-size:1.02rem; line-height:1.2; text-decoration:none; transition:opacity .2s, transform .2s; }
+    .feedback-fab:hover { background:#000; }
+    .feedback-fab:focus-visible { outline:3px solid #f2c94c; outline-offset:3px; }
+    .feedback-fab.is-hidden { opacity:0; pointer-events:none; transform:translateY(0.75rem); }
+    body { padding-bottom:5.5rem; }
   </style>
 </head>
 <body>
@@ -203,6 +210,7 @@
   <footer>
     <p>&copy; 2026 JS Legends · Zirconia, NC · <a href="https://gist.github.com/Curious-Josh1975/8cf0863ac1959f25cbb6e45ab8584f67">Privacy</a></p>
   </footer>
+  <a class="feedback-fab" href="mailto:joshuaatchison.atchison@gmail.com?subject=Simple%20Meds%20feedback&amp;body=What%20happened%3A%0D%0A%0D%0A%0D%0AWhat%20you%20expected%3A%0D%0A%0D%0A%0D%0APhone%20model%3A%0D%0A" data-track="feedback-fab"><span aria-hidden="true">&#128172;</span> Report a bug / Suggest an idea</a>
   <script src="assets/site.js"></script>
 </body>
 </html>

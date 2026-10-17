@@ -53,3 +53,27 @@ const ANALYTICS_CODE = 'jslegends';
     if (el) track(el.getAttribute('data-track'));
   });
 })();
+
+// Floating feedback button: fade it out whenever it would sit on top of a
+// Download or Buy button (checked on scroll/resize), so it never covers them.
+(function () {
+  var fab = document.querySelector('.feedback-fab');
+  if (!fab) return;
+  var targets = document.querySelectorAll('[data-track="download-apk"], [data-track="buy-remove-ads"]');
+  if (!targets.length) return;
+  var pad = 12, queued = false;
+  function check() {
+    queued = false;
+    var f = fab.getBoundingClientRect();
+    var hit = false;
+    targets.forEach(function (t) {
+      var r = t.getBoundingClientRect();
+      if (r.left < f.right + pad && r.right > f.left - pad && r.top < f.bottom + pad && r.bottom > f.top - pad) hit = true;
+    });
+    fab.classList.toggle('is-hidden', hit);
+  }
+  function queue() { if (!queued) { queued = true; requestAnimationFrame(check); } }
+  window.addEventListener('scroll', queue, { passive: true });
+  window.addEventListener('resize', queue);
+  check();
+})();
