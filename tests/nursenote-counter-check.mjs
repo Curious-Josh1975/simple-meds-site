@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 import vm from "node:vm";
 const html = readFileSync(new URL("../nursenote.html", import.meta.url), "utf8");
 const src = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]).find((s) => s.includes("founding-left"));
-const patched = src.replace("const PROXY_BASE = '';", "const PROXY_BASE = 'https://proxy.example.test';");
+const patched = src.replace(/const PROXY_BASE = '[^']*';/, "const PROXY_BASE = 'https://proxy.example.test';");
 if (patched === src) throw new Error("PROXY_BASE line not found");
 const FALLBACK = "Limited to 25 founding nurses";
 function el(text) { return { textContent: text, innerHTML: "", style: {}, attrs: {}, removeAttribute(a) { delete this.attrs[a]; } }; }
