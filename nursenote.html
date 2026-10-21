@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NurseNote — JS Legends</title>
+  <meta name="description" content="NurseNote drafts visit notes for home health and hospice nurses. You review and sign every note." />
+  <style>
+    :root {
+      --bg: #f7f4ef;
+      --card: #ffffff;
+      --ink: #1c1b19;
+      --muted: #5c574f;
+      --line: #e4ddd2;
+      --accent: #2f6f5e;
+      --accent-ink: #ffffff;
+      --warn: #6b5a3e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.45;
+    }
+    header, main, footer {
+      max-width: 40rem;
+      margin: 0 auto;
+      padding: 1.25rem 1rem;
+    }
+    header {
+      display: flex;
+      gap: 0.9rem;
+      align-items: center;
+      padding-top: 1.5rem;
+    }
+    header img.icon {
+      width: 4.5rem;
+      height: 4.5rem;
+      border-radius: 1.1rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    h1 {
+      font-size: 1.55rem;
+      margin: 0 0 0.25rem;
+      letter-spacing: -0.02em;
+    }
+    .tagline {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .hero {
+      width: 100%;
+      border-radius: 0.85rem;
+      display: block;
+      margin: 0.5rem 0 1.25rem;
+      border: 1px solid var(--line);
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      padding: 1.1rem 1rem;
+      margin-bottom: 1rem;
+    }
+    h2 {
+      font-size: 1.1rem;
+      margin: 0 0 0.65rem;
+    }
+    p, li { font-size: 0.98rem; }
+    .shots {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+    }
+    .shots img {
+      width: 100%;
+      height: auto;
+      border-radius: 0.75rem;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+    .btn {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 0.8rem;
+      padding: 0.95rem 1rem;
+      font-weight: 650;
+      font-size: 1.05rem;
+      margin: 0.75rem 0 0.35rem;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--accent-ink);
+    }
+    .btn-secondary {
+      background: #efe8dc;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+    .note {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin: 0.35rem 0 0;
+    }
+    ol {
+      margin: 0.4rem 0 0;
+      padding-left: 1.25rem;
+    }
+    li { margin-bottom: 0.4rem; }
+    .disclaimer {
+      border-left: 3px solid var(--warn);
+      padding: 0.65rem 0.85rem;
+      background: #f3ebe0;
+      border-radius: 0 0.75rem 0.75rem 0;
+      color: var(--warn);
+      font-size: 0.92rem;
+    }
+    footer {
+      color: var(--muted);
+      font-size: 0.88rem;
+      padding-bottom: 2.5rem;
+    }
+    footer a { color: var(--accent); }
+    @media (min-width: 640px) {
+      .shots { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .topnav { max-width:40rem; margin:0 auto; padding:0.9rem 1rem 0; display:flex; flex-wrap:wrap; gap:0.4rem 1rem; align-items:center; font-size:0.95rem; }
+    .topnav a { color: var(--accent); text-decoration:none; font-weight:600; }
+    .topnav .brand { color: var(--ink); font-weight:750; margin-right:auto; }
+
+    .mark { width:4.5rem; height:4.5rem; border-radius:1.1rem; background:var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1.7rem; letter-spacing:-0.03em; box-shadow:0 2px 10px rgba(0,0,0,0.08); flex:none; }
+    .lead { font-size:1.08rem; margin:0 0 0.6rem; }
+    .product { display:flex; gap:0.85rem; align-items:flex-start; }
+    .product img, .product .pmark { width:3.5rem; height:3.5rem; border-radius:0.85rem; flex:none; }
+    .product .pmark { background:#efe8dc; border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-weight:750; color:var(--accent); }
+    .product h3 { margin:0 0 0.2rem; font-size:1.05rem; }
+    .product p { margin:0.2rem 0; }
+    .badge { display:inline-block; font-size:0.8rem; font-weight:650; padding:0.15rem 0.55rem; border-radius:999px; background:#e3efe9; color:var(--accent); }
+    .badge.test { background:#f3ebe0; color:var(--warn); }
+    .product a.more { color:var(--accent); font-weight:600; }
+    a.product-link { color:inherit; text-decoration:none; border-radius:0.85rem; padding:0.5rem; margin:-0.5rem; transition:background .15s, box-shadow .15s; }
+    a.product-link .more { color:var(--accent); font-weight:600; text-decoration:underline; }
+    a.product-link:hover { background:#f3efe7; }
+    a.product-link:focus-visible { outline:3px solid var(--accent); outline-offset:2px; background:#f3efe7; }
+    .field { display:block; margin:0 0 0.8rem; font-weight:600; font-size:0.95rem; }
+    .field input, .field textarea { display:block; width:100%; margin-top:0.3rem; font:inherit; font-weight:400; padding:0.65rem 0.75rem; border:1px solid var(--line); border-radius:0.65rem; background:#fff; color:var(--ink); }
+    .field input:focus, .field textarea:focus { outline:2px solid var(--accent); border-color:var(--accent); }
+    button.btn { width:100%; border:0; cursor:pointer; font-family:inherit; }
+    .note a { color: var(--accent); }
+    .works li { margin-bottom:0.5rem; }
+
+    /* Floating feedback button (all pages) */
+    .feedback-fab { position:fixed; right:max(1rem, env(safe-area-inset-right)); bottom:max(1rem, env(safe-area-inset-bottom)); z-index:1000; display:inline-flex; align-items:center; gap:0.5rem; min-height:52px; padding:0.8rem 1.25rem; border-radius:999px; background:#1c1b19; color:#ffffff; border:2px solid #ffffff; box-shadow:0 4px 18px rgba(0,0,0,0.28); font-weight:750; font-size:1.02rem; line-height:1.2; text-decoration:none; transition:opacity .2s, transform .2s; }
+    .feedback-fab:hover { background:#000; }
+    .feedback-fab:focus-visible { outline:3px solid #f2c94c; outline-offset:3px; }
+    .feedback-fab.is-hidden { opacity:0; pointer-events:none; transform:translateY(0.75rem); }
+    body { padding-bottom:5.5rem; }
+  
+    .offer { border:2px solid var(--accent); }
+    .founding-badge { display:inline-block; font-size:0.8rem; font-weight:750; padding:0.2rem 0.6rem; border-radius:999px; background:var(--accent); color:#fff; margin-bottom:0.5rem; }
+    .price { font-size:1.6rem; font-weight:800; margin:0.2rem 0; letter-spacing:-0.02em; }
+    .price small { font-size:1rem; font-weight:600; color:var(--muted); }
+    .regular { color:var(--muted); margin:0.3rem 0; }
+    .spots { font-weight:700; color:var(--warn); background:#f3ebe0; border-radius:0.6rem; padding:0.5rem 0.7rem; margin:0.6rem 0; }
+    .btn[aria-disabled="true"] { opacity:0.6; cursor:not-allowed; }
+  </style>
+</head>
+<body>
+  <nav class="topnav" aria-label="Site">
+    <a class="brand" href="index.html">JS Legends</a>
+    <a href="index.html#products">Products</a><a href="index.html#inventions">Inventions</a><a href="coming-soon.html">Coming soon</a><a href="index.html#about">About</a><a href="index.html#contact">Contact</a>
+  </nav>
+  <header>
+    <div class="mark" aria-hidden="true">NN</div>
+    <div>
+      <h1>NurseNote</h1>
+      <p class="tagline">A visit-notes helper for home health and hospice nurses.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="card offer" id="offer" aria-labelledby="offer-title">
+      <span class="founding-badge" id="founding-badge">Founding Nurse price</span>
+      <h2 id="offer-title">Founding Nurse price</h2>
+      <p class="price" id="main-price">$7.99<small>/mo</small> or $79<small>/yr</small></p>
+      <p id="main-terms">Locked in for life while subscribed. Only 25 spots.</p>
+      <p class="regular" id="regular-line">Regular price after the founding spots are gone: $17.77/mo or $150/yr.</p>
+      <p class="spots" id="spots" aria-live="polite">Limited to 25 founding nurses</p>
+      <p><strong>7-day free trial.</strong> Try it for a week before you pay.</p>
+      <a class="btn btn-primary" id="buy-monthly" role="link" aria-disabled="true" data-track="nursenote-monthly">Monthly — Coming soon</a>
+      <a class="btn btn-secondary" id="buy-yearly" role="link" aria-disabled="true" data-track="nursenote-yearly">Yearly — Coming soon</a>
+      <p class="note">Sign-up opens soon. Once the 25 founding spots are taken, new subscribers pay the regular price.</p>
+    </section>
+
+    <section class="card" aria-labelledby="what-title">
+      <h2 id="what-title">What it does</h2>
+      <ul class="works">
+        <li>NurseNote drafts your visit note from what you enter.</li>
+        <li>You review it, edit anything, and sign it. Nothing is final until you sign.</li>
+        <li>Built for busy home health and hospice nurses, phone first.</li>
+      </ul>
+      <p class="disclaimer">NurseNote drafts notes. The nurse reviews and signs every note and is responsible for what goes in the chart.</p>
+    </section>
+  </main>
+
+  <script>
+    // ===== CONFIG =====
+    // PROXY_BASE: base URL of the NurseNote proxy (serves GET /founding-left -> {left, total}).
+    // Leave EMPTY until the proxy is deployed. Do not put a made-up URL here.
+    const PROXY_BASE = '';
+    // Stripe Payment Links. Leave EMPTY until Keep makes the real links.
+    const PAY_LINK_MONTHLY = '';
+    const PAY_LINK_YEARLY = '';
+    // ==================
+
+    (function () {
+      var FOUNDING_TOTAL = 25;
+      var base = PROXY_BASE;
+      // Preview only: ?proxy=<url> is honored on localhost, never on the live site.
+      var host = location.hostname;
+      if (host === 'localhost' || host === '127.0.0.1') {
+        var p = new URLSearchParams(location.search).get('proxy');
+        if (p) base = p;
+      }
+      var spots = document.getElementById('spots');
+
+      function setButtons(foundingOpen) {
+        var m = document.getElementById('buy-monthly'), y = document.getElementById('buy-yearly');
+        var mp = foundingOpen ? '$7.99/mo' : '$17.77/mo', yp = foundingOpen ? '$79/yr' : '$150/yr';
+        [[m, PAY_LINK_MONTHLY, 'Monthly ' + mp], [y, PAY_LINK_YEARLY, 'Yearly ' + yp]].forEach(function (b) {
+          if (b[1]) { b[0].href = b[1]; b[0].removeAttribute('aria-disabled'); b[0].textContent = 'Start free trial — ' + b[2]; }
+          else { b[0].textContent = b[2] + ' — Coming soon'; }
+        });
+      }
+      function fallback() { spots.textContent = 'Limited to 25 founding nurses'; setButtons(true); }
+      function soldOut() {
+        document.getElementById('founding-badge').style.display = 'none';
+        document.getElementById('offer-title').textContent = 'NurseNote subscription';
+        document.getElementById('main-price').innerHTML = '$17.77<small>/mo</small> or $150<small>/yr</small>';
+        document.getElementById('main-terms').textContent = 'All 25 founding spots are taken.';
+        document.querySelector('#offer .note').textContent = 'Sign-up opens soon.';
+        document.getElementById('regular-line').style.display = 'none';
+        spots.style.display = 'none';
+        setButtons(false);
+      }
+      setButtons(true);
+      if (!base || !window.fetch) return fallback();
+      var ctrl = window.AbortController ? new AbortController() : null;
+      var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 4000);
+      fetch(base.replace(/\/$/, '') + '/founding-left', { signal: ctrl ? ctrl.signal : undefined, cache: 'no-store' })
+        .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+        .then(function (d) {
+          clearTimeout(timer);
+          var left = Number(d.left), total = Number(d.total) || FOUNDING_TOTAL;
+          if (!Number.isFinite(left) || left < 0) return fallback();
+          if (left === 0) return soldOut();
+          spots.textContent = left + ' of ' + total + ' founding spots left';
+        })
+        .catch(function () { clearTimeout(timer); fallback(); });
+    })();
+  </script>
+
+  <footer>
+    <p>&copy; 2026 JS Legends · Zirconia, NC · <a href="https://gist.github.com/Curious-Josh1975/8cf0863ac1959f25cbb6e45ab8584f67">Privacy</a></p>
+  </footer>
+  <a class="feedback-fab" href="mailto:joshuaatchison.atchison@gmail.com?subject=Simple%20Meds%20feedback&amp;body=What%20happened%3A%0D%0A%0D%0A%0D%0AWhat%20you%20expected%3A%0D%0A%0D%0A%0D%0APhone%20model%3A%0D%0A" data-track="feedback-fab"><span aria-hidden="true">&#128172;</span> Report a bug / Suggest an idea</a>
+  <script src="assets/site.js"></script>
+</body>
+</html>
