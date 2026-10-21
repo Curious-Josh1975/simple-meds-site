@@ -211,16 +211,16 @@
             <p id="android-download"><a class="btn btn-primary" href="https://github.com/Curious-Josh1975/simple-meds-site/releases/download/nursenote-v1.0.24/NurseNote-1.0.24-live.apk" data-track="download-apk">Download NurseNote (Android)</a></p>
       <div id="iphone-card" class="card" hidden style="margin:0 0 1rem">
         <h3 style="margin-top:0">NurseNote is Android-only for now. Want it on iPhone?</h3>
-        <p>Tap below so we know iPhone nurses are asking. We don't collect your email or any personal info.</p>
+        <p>Tap below so we know iPhone nurses are asking. No email or name collected.</p>
         <p id="iphone-vote"><button type="button" class="btn btn-primary" id="iphone-yes">Yes, I want it on iPhone</button></p>
       </div>
-      <p>NurseNote is an Android app you download straight from jslegends.com, not from Google Play. That means your phone will ask a couple of extra questions the first time.</p>
-      <ol>
+      <p id="android-intro">NurseNote is an Android app you download straight from jslegends.com, not from Google Play. That means your phone will ask a couple of extra questions the first time.</p>
+      <ol id="android-steps">
         <li>Open the downloaded file. Android will ask you to allow installs from your browser or Files app. This is called <em>Install unknown apps</em>. Turn it on for that app.</li>
         <li>You may see a warning, possibly from Play Protect. That's normal for an app that doesn't come from the Play Store. Tap through to install.</li>
         <li>Open NurseNote and allow the microphone when it asks.</li>
       </ol>
-      <p class="note">Android phones only. NurseNote doesn't work on iPhone.</p>
+      <p class="note" id="android-only">Android phones only. NurseNote doesn't work on iPhone.</p>
     </section>
 
   </main>
@@ -300,9 +300,11 @@
       var ua = navigator.userAgent || '';
       var ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
       if (!ios) return;
-      var dl = document.getElementById('android-download');
       var card = document.getElementById('iphone-card');
-      if (dl) dl.hidden = true;
+      ['android-download', 'android-intro', 'android-steps', 'android-only'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.hidden = true;
+      });
       if (!card) return;
       card.hidden = false;
       var base = PROXY_BASE;
@@ -313,12 +315,12 @@
       }
       function send(kind) {
         try {
-          if (!base || !window.fetch) return;
-          fetch(base.replace(/\/$/, '') + '/iphone-interest', {
+          if (!base || !window.fetch) return Promise.resolve(false);
+          return fetch(base.replace(/\/$/, '') + '/iphone-interest', {
             method: 'POST', headers: { 'Content-Type': 'text/plain' },
             body: JSON.stringify({ kind: kind }), cache: 'no-store'
-          }).catch(function () {});
-        } catch (e) {}
+          }).then(function (r) { return r.ok; }, function () { return false; });
+        } catch (e) { return Promise.resolve(false); }
       }
       try {
         if (!sessionStorage.getItem('nn_iphone_visit')) {
@@ -328,8 +330,10 @@
       } catch (e) {}
       var btn = document.getElementById('iphone-yes');
       if (btn) btn.addEventListener('click', function () {
-        send('tap');
-        document.getElementById('iphone-vote').textContent = 'Thanks, your vote is counted.';
+        btn.disabled = true;
+        send('tap').then(function (ok) {
+          document.getElementById('iphone-vote').textContent = ok ? 'Thanks, your vote is counted.' : 'Thanks!';
+        });
       });
     })();
   </script>
