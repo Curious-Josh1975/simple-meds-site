@@ -237,6 +237,16 @@
           else { b[0].textContent = b[2] + ' — Coming soon'; }
         });
       }
+      // Accept only {left, total} where total is a whole number from 1 to 100 (25 today) and
+      // left is a whole number with 0 <= left <= total. Real JSON numbers only: no strings,
+      // booleans, null, arrays, or fractions. Anything else shows the honest fallback text.
+      function validFoundingLeft(d) {
+        if (!d || typeof d !== 'object' || Array.isArray(d)) return null;
+        var left = d.left, total = d.total;
+        if (typeof total !== 'number' || !Number.isInteger(total) || total < 1 || total > 100) return null;
+        if (typeof left !== 'number' || !Number.isInteger(left) || left < 0 || left > total) return null;
+        return { left: left, total: total };
+      }
       function fallback() { spots.textContent = 'Limited to 25 founding nurses'; setButtons(true); }
       function soldOut() {
         document.getElementById('founding-badge').style.display = 'none';
@@ -256,8 +266,9 @@
         .then(function (r) { if (!r.ok) throw 0; return r.json(); })
         .then(function (d) {
           clearTimeout(timer);
-          var left = Number(d.left), total = Number(d.total) || FOUNDING_TOTAL;
-          if (!Number.isFinite(left) || left < 0) return fallback();
+          var v = validFoundingLeft(d);
+          if (!v) return fallback();
+          var left = v.left, total = v.total;
           if (left === 0) return soldOut();
           spots.textContent = left + ' of ' + total + ' founding spots left';
         })
