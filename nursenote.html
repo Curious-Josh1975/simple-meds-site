@@ -208,7 +208,12 @@
     </section>
     <section class="card" aria-labelledby="install-title">
       <h2 id="install-title">Installing NurseNote</h2>
-            <p><a class="btn btn-primary" href="https://github.com/Curious-Josh1975/simple-meds-site/releases/download/nursenote-v1.0.24/NurseNote-1.0.24-live.apk" data-track="download-apk">Download NurseNote (Android)</a></p>
+            <p id="android-download"><a class="btn btn-primary" href="https://github.com/Curious-Josh1975/simple-meds-site/releases/download/nursenote-v1.0.24/NurseNote-1.0.24-live.apk" data-track="download-apk">Download NurseNote (Android)</a></p>
+      <div id="iphone-card" class="card" hidden style="margin:0 0 1rem">
+        <h3 style="margin-top:0">NurseNote is Android-only for now. Want it on iPhone?</h3>
+        <p>Tap below so we know iPhone nurses are asking. We don't collect your email or any personal info.</p>
+        <p id="iphone-vote"><button type="button" class="btn btn-primary" id="iphone-yes">Yes, I want it on iPhone</button></p>
+      </div>
       <p>NurseNote is an Android app you download straight from jslegends.com, not from Google Play. That means your phone will ask a couple of extra questions the first time.</p>
       <ol>
         <li>Open the downloaded file. Android will ask you to allow installs from your browser or Files app. This is called <em>Install unknown apps</em>. Turn it on for that app.</li>
@@ -285,6 +290,47 @@
           spots.textContent = left + ' of ' + total + ' founding spots left';
         })
         .catch(function () { clearTimeout(timer); fallback(); });
+    })();
+  </script>
+
+  <script>
+    // iPhone / iPad: hide the Android download, show an anonymous "want it on iPhone" vote.
+    // Sends only {kind:'visit'|'tap'} to the proxy. No email, no id. Fails silently.
+    (function () {
+      var ua = navigator.userAgent || '';
+      var ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+      if (!ios) return;
+      var dl = document.getElementById('android-download');
+      var card = document.getElementById('iphone-card');
+      if (dl) dl.hidden = true;
+      if (!card) return;
+      card.hidden = false;
+      var base = PROXY_BASE;
+      var host = location.hostname;
+      if (host === 'localhost' || host === '127.0.0.1') {
+        var p = new URLSearchParams(location.search).get('proxy');
+        if (p) base = p;
+      }
+      function send(kind) {
+        try {
+          if (!base || !window.fetch) return;
+          fetch(base.replace(/\/$/, '') + '/iphone-interest', {
+            method: 'POST', headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify({ kind: kind }), cache: 'no-store'
+          }).catch(function () {});
+        } catch (e) {}
+      }
+      try {
+        if (!sessionStorage.getItem('nn_iphone_visit')) {
+          sessionStorage.setItem('nn_iphone_visit', '1');
+          send('visit');
+        }
+      } catch (e) {}
+      var btn = document.getElementById('iphone-yes');
+      if (btn) btn.addEventListener('click', function () {
+        send('tap');
+        document.getElementById('iphone-vote').textContent = 'Thanks, your vote is counted.';
+      });
     })();
   </script>
 
